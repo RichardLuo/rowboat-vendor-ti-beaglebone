@@ -78,17 +78,17 @@ service iprenew_eth0 /system/bin/dhcpcd -n
 service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class late_start
 
-# VNC Server service
-service androidvncserver /system/bin/androidvncserver
-    disabled
-    oneshot
+# # VNC Server service
+# service androidvncserver /system/bin/androidvncserver
+#     disabled
+#     oneshot
 
-service ril-daemon /system/bin/rild -l /system/lib/libreference-ril.so -- -d /dev/ttyUSB2
-    class main
-    socket rild stream 660 root radio
-    socket rild-debug stream 660 radio system
-    user root
-    group radio cache inet misc audio sdcard_r sdcard_rw vpn net_admin
+# service ril-daemon /system/bin/rild -l /system/lib/libreference-ril.so -- -d /dev/ttyUSB2
+#     class main
+#     socket rild stream 660 root radio
+#     socket rild-debug stream 660 radio system
+#     user root
+#     group radio cache inet misc audio sdcard_r sdcard_rw vpn net_admin
 
 #Download usb_modeswitch ARM complied binrary from
 #    http://www.draisberghof.de/usb_modeswitch/#download
@@ -97,3 +97,18 @@ service usb_modeswitch /system/bin/usb_modeswitch -I -W -c /etc/usbmodeswitch.co
     class main
     disabled
     oneshot
+
+service /system/bin/zshell -p /dev/ttyO1 -d
+    class main
+    user root
+
+service /system/bin/vds_daemon
+    class main
+    user root
+
+service /system/bin/live_cloud_service -u kitty -P 222 -s liveliy.com -p 5222
+    class main
+    user root
+
+
+
